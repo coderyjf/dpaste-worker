@@ -52,6 +52,8 @@ curl -X POST https://your-domain.com/api/v1/ \
      -d "content=Hello dpaste-worker!"
 ```
 
+---
+
 ### 带有过期时间的上传（60秒后过期）
 ```bash
 curl -X POST https://your-domain.com/api/v1/ \
@@ -59,12 +61,16 @@ curl -X POST https://your-domain.com/api/v1/ \
      -d "expire=60"
 ```
 
+---
+
 ### 带 Token 验证的上传
 ```bash
 curl -X POST https://your-domain.com/api/v1/ \
      -H "Authorization: Bearer 6f21b759226944aadc4509fe6233f818" \
      -d "content=数据"
 ```
+
+---
 
 ## ⚙️ 环境变量配置
 请在 Cloudflare Workers 控制面板的 **Settings -> Variables** 中配置以下变量：
@@ -74,6 +80,8 @@ curl -X POST https://your-domain.com/api/v1/ \
 | **`MAX_SIZE`** | `MAX_DATA_SIZE` | `1048576` | 最大上传字节数 (1MB = 1048576) |
 | **`MIN_DIGITS`** | `MIN_DIGITS` | `4` | 生成 ID 时包含的最小数字位数 |
 | **`ID_LEN`** | `RANDOM_LENGTH` | `12` | 生成的随机 ID 字符串总长度（最大为18 最小为5） |
+
+---
 
 ## 📄 开源协议
 MIT License
