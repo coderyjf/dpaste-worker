@@ -1,13 +1,13 @@
 # dpaste-worker
 
-一个基于 Cloudflare Workers 的轻量级、自托管文本/代码存储 API 服务。
+一个基于 Cloudflare Workers 的轻量级、自托管文本/代码存储 API 服务
 
 ## 🌟 功能特性
 
-- **极简接口**：仅需一个 POST 请求即可完成内容上传。
-- **过期控制**：支持自定义过期时间（秒），默认永久保存。
-- **安全验证**：支持通过 `AUTH` 环境变量设置 `Bearer Token` 鉴权。
-- **即时访问**：上传成功后返回短链接标识符，通过根目录直接访问原始文本。
+- **极简接口**：仅需一个 POST 请求即可完成内容上传
+- **过期控制**：支持自定义过期时间（秒），默认永久保存
+- **安全验证**：支持通过 `AUTH` 环境变量设置 `Bearer Token` 鉴权
+- **即时访问**：上传成功后返回短链接标识符，通过根目录直接访问原始文本
 
 ---
 
@@ -21,9 +21,9 @@
 #### 请求参数 (Body)
 
 | 参数名 | 类型 | 必选 | 说明 |
-| :--- | :--- | :--- | :--- |
-| **`content`** | string | **是** | 需要存储的文本内容。 |
-| **`expire`** | number | 否 | 过期时间（秒）。如果不提供，内容将永久保存。 |
+| :---: | :---: | :---: | :---: |
+| **`content`** | string | **是** | 需要存储的文本内容 |
+| **`expire`** | number | 否 | 过期时间（秒）如果不提供，内容将永久保存 |
 
 #### 请求头 (Headers)
 
@@ -31,7 +31,7 @@
 - `Authorization: Bearer <你的AUTH值>`
 
 #### 响应结果
-成功后返回 `201 OK`，返回值为随机生成的字符串 ID（例如：`abc123XYZ`）。
+成功后返回 `201 OK`，返回值为随机生成的字符串 ID（例如：`abc123XYZ`）
 
 ---
 
@@ -39,7 +39,7 @@
 
 **请求 URL:** `https://your-domain.com/<随机字符串>`
 
-通过 GET 请求直接访问返回的 ID，即可获取对应的原始文本内容。
+通过 GET 请求直接访问返回的 ID，即可获取对应的原始文本内容
 
 ---
 
@@ -61,15 +61,15 @@ curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) 
 ### 带 Token 验证的上传
 ```bash
 curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) \
-     -H "Authorization: Bearer 6546464" \
+     -H "Authorization: Bearer 6f21b759226944aadc4509fe6233f818" \
      -d "content=数据"
 ```
 
 ## ⚙️ 环境变量配置
 在部署环境中（如 Cloudflare Workers），你可以配置以下变量：
 | 变量名 | 描述 | 示例 |
-| :--- | :--- | :--- |
-| `AUTH` | 访问令牌。设置后，请求头必须匹配 `Bearer <AUTH>` | `6f21b759226944aadc4509fe6233f818` |
+| :---: | :---: | :---: |
+| `AUTH` | 访问令牌 设置后，请求头必须匹配 `Bearer <AUTH>` | `6f21b759226944aadc4509fe6233f818` |
 
 ## 📄 开源协议
 MIT License
