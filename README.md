@@ -67,10 +67,13 @@ curl -X POST https://your-domain.com/api/v1/ \
 ```
 
 ## ⚙️ 环境变量配置
-在部署环境中（如 Cloudflare Workers），你可以配置以下变量：
-| 变量名 | 描述 | 示例 |
-| :---: | :---: | :---: |
-| `AUTH` | **访问令牌** 设置后，请求头必须匹配 `Bearer <AUTH>` | `6f21b759226944aadc4509fe6233f818` |
+请在 Cloudflare Workers 控制面板的 **Settings -> Variables** 中配置以下变量：
+| 环境变量名 | 对应内部变量 | 默认值 | 说明 |
+| :---: | :---: | :---: | :---: |
+| **`AUTH`** | `AUTHORIZATION` | (空) | **访问令牌** 设置后，请求头必须匹配 `Bearer <AUTH>` |
+| **`MAX_SIZE`** | `MAX_DATA_SIZE` | `1048576` | 最大上传字节数 (1MB = 1048576) |
+| **`MIN_DIGITS`** | `MIN_DIGITS` | `4` | 生成 ID 时包含的最小数字位数 |
+| **`ID_LEN`** | `RANDOM_LENGTH` | `12` | 生成的随机 ID 字符串总长度（最大为18 最小为5） |
 
 ## 📄 开源协议
 MIT License
