@@ -78,7 +78,7 @@ curl -X POST https://your-domain.com/api/v1/ \
 | :---: | :---: | :---: | :---: |
 | **`AUTH`** | `AUTHORIZATION` | (空) | **访问令牌** 设置后，请求头必须匹配 `Bearer <AUTH>` |
 | **`MAX_SIZE`** | `MAX_DATA_SIZE` | `1048576` | 最大上传字节数 (1MB = 1048576) |
-| **`MIN_DIGITS`** | `MIN_DIGITS` | `4` | 生成 ID 时包含的最小数字位数 |
+| **`DIGITS_LEN`** | `DIGIT_COUNT` | `4` | 生成 ID 时包含的数字位数 |
 | **`ID_LEN`** | `RANDOM_LENGTH` | `12` | 生成的随机 ID 字符串总长度（最大为18 最小为5） |
 
 ---
