@@ -53,14 +53,14 @@ curl -X POST https://your-domain.com/api/v1/ \
 
 ### 带有过期时间的上传（60秒后过期）
 ```bash
-curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) \
+curl -X POST https://your-domain.com/api/v1/ \
      -d "content=这是一条临时消息" \
      -d "expire=60"
 ```
 
 ### 带 Token 验证的上传
 ```bash
-curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) \
+curl -X POST https://your-domain.com/api/v1/ \
      -H "Authorization: Bearer 6f21b759226944aadc4509fe6233f818" \
      -d "content=数据"
 ```
@@ -69,7 +69,7 @@ curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) 
 在部署环境中（如 Cloudflare Workers），你可以配置以下变量：
 | 变量名 | 描述 | 示例 |
 | :---: | :---: | :---: |
-| `AUTH` | 访问令牌 设置后，请求头必须匹配 `Bearer <AUTH>` | `6f21b759226944aadc4509fe6233f818` |
+| `AUTH` | **访问令牌** 设置后，请求头必须匹配 `Bearer <AUTH>` | `6f21b759226944aadc4509fe6233f818` |
 
 ## 📄 开源协议
 MIT License
