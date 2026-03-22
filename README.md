@@ -31,7 +31,7 @@
 - `Authorization: Bearer <你的AUTH值>`
 
 #### 响应结果
-成功后返回 `200 OK`，返回值为随机生成的字符串 ID（例如：`abc123XYZ`）。
+成功后返回 `201 OK`，返回值为随机生成的字符串 ID（例如：`abc123XYZ`）。
 
 ---
 
@@ -47,5 +47,29 @@
 
 ### 基础上传（永久存储）
 ```bash
-curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) \
+curl -X POST https://your-domain.com/api/v1/ \
      -d "content=Hello dpaste-worker!"
+```
+
+### 带有过期时间的上传（60秒后过期）
+```bash
+curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) \
+     -d "content=这是一条临时消息" \
+     -d "expire=60"
+```
+
+### 带 Token 验证的上传
+```bash
+curl -X POST [https://your-domain.com/api/v1/](https://your-domain.com/api/v1/) \
+     -H "Authorization: Bearer 6546464" \
+     -d "content=数据"
+```
+
+## ⚙️ 环境变量配置
+在部署环境中（如 Cloudflare Workers），你可以配置以下变量：
+| 变量名 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `AUTH` | 访问令牌。设置后，请求头必须匹配 `Bearer <AUTH>` | `6f21b759226944aadc4509fe6233f818` |
+
+## 📄 开源协议
+MIT License
