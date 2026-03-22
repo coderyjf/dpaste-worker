@@ -26,7 +26,6 @@ async function handleRequest(request, env, ctx) {
 
   getConfig(env);
 
-  // 后续可以添加对其他方法的支持
   switch (request.method) {
     case "GET":
       return handleRequestGet(request, env);
@@ -87,10 +86,6 @@ function isValidPostHeaders(headers) {
 function extractGetKeyFromUrl(requestUrl) {
   const url = new URL(requestUrl);
   const path = url.pathname;
-  // if (path.startsWith(PREFIX)) {
-  //   return path.substring(PREFIX.length);
-  // }
-  // return null;
   return path.substring(1);
 }
 
