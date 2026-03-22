@@ -57,10 +57,10 @@ function getConfig(env) {
     }
   }
 
-  if (env.MIN_DIGITS) {
-    const parsedDigits = parseInt(env.MIN_DIGITS);
+  if (env.DIGITS_LEN) {
+    const parsedDigits = parseInt(env.DIGITS_LEN);
     if (!isNaN(parsedDigits) && parsedDigits >= 0) {
-      MIN_DIGITS = parsedDigits;
+      DIGIT_COUNT = parsedDigits;
     }
   }
 }
