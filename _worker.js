@@ -1,5 +1,6 @@
-let MIN_LENGTH = 8;
-let MAX_LENGTH = 16;
+const MIN_LENGTH = 5;
+const MAX_LENGTH = 18;
+
 let DIGIT_COUNT = 4;
 let RANGOM_LENGTH = 12;
 let MAX_DATA_SIZE = 1024 * 1024;
@@ -41,6 +42,27 @@ async function handleRequest(request, env, ctx) {
 
 function getConfig(env) {
   AUTHORIZATION = env.AUTH || "";
+
+  if (env.MAX_SIZE) {
+    const parsedSize = parseInt(env.MAX_SIZE);
+    if (!isNaN(parsedSize) && parsedSize > 0) {
+      MAX_DATA_SIZE = parsedSize;
+    }
+  }
+
+  if (env.ID_LEN) {
+    const parsedLen = parseInt(env.ID_LEN);
+    if (!isNaN(parsedLen) && parsedLen > 0) {
+      RANGOM_LENGTH = parsedLen;
+    }
+  }
+
+  if (env.MIN_DIGITS) {
+    const parsedDigits = parseInt(env.MIN_DIGITS);
+    if (!isNaN(parsedDigits) && parsedDigits >= 0) {
+      MIN_DIGITS = parsedDigits;
+    }
+  }
 }
 
 function isValidGetPath(requestUrl) {
