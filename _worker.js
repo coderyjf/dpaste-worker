@@ -149,8 +149,6 @@ async function extractPostFormData(request) {
 }
 
 function adjustRangeLength() {
-  if (MIN_LENGTH < 0) MIN_LENGTH = 1;
-  if (MAX_LENGTH < MIN_LENGTH) MAX_LENGTH = MIN_LENGTH;
   if (RANGOM_LENGTH < MIN_LENGTH) RANGOM_LENGTH = MIN_LENGTH;
   if (RANGOM_LENGTH > MAX_LENGTH) RANGOM_LENGTH = MAX_LENGTH;
   if (DIGIT_COUNT < 0) DIGIT_COUNT = 0;
