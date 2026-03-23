@@ -83,5 +83,25 @@ curl -X POST https://your-domain.com/api/v1/ \
 
 ---
 
+## 🗄️ KV 命名空间绑定
+
+本服务使用 Cloudflare Workers KV 来持久化存储粘贴内容，请在 Workers 控制台的 **Settings -> Variables** 中，添加 **KV Namespace Bindings**：
+
+| 绑定变量名 | 说明 |
+| :---: | :---: |
+| **`KV`** | 用于存储文本数据的 KV 命名空间名称 |
+
+### 创建步骤
+1. 在 Cloudflare Dashboard 中进入 **Workers & Pages**
+2. 选择您的 Worker 服务，点击 **Settings** → **Variables**
+3. 在 **KV Namespace Bindings** 部分，点击 **Add binding**
+4. 在 **Variable name** 中输入 `KV`
+5. 在 **KV namespace** 中选择一个已有的命名空间，或点击 **Create namespace** 新建一个
+6. 保存设置并重新部署 Worker
+
+> ⚠️ 如果没有正确绑定 `KV` 命名空间，服务将无法正常存储和读取数据
+
+---
+
 ## 📄 开源协议
 MIT License
