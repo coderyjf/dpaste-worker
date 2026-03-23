@@ -8,8 +8,24 @@ let MAX_DATA_SIZE = 1024 * 1024;
 // env.AUTH
 let AUTHORIZATION = "";
 const PREFIX = "/api/v1/";
-const ALLOWED_METHODS = ["GET", "POST"];
 const VALIDCONTENTTYPE = "application/x-www-form-urlencoded";
+
+const ROUTES = [
+  {
+    method: "GET",
+    pattern: new URLPattern({
+      pathname: `/:id([A-Za-z0-9]{${MIN_LENGTH},${MAX_LENGTH}})`,
+    }),
+    handler: handleRequestIDGet,
+  },
+  {
+    method: "POST",
+    pattern: new URLPattern({
+      pathname: `${PREFIX}`,
+    }),
+    handler: handleRequestApiPost,
+  },
+];
 
 export default {
   async fetch(request, env, ctx) {
@@ -25,19 +41,25 @@ async function handleRequest(request, env, ctx) {
     return Response.redirect(url.href);
   }
 
-  getConfig(env);
+  const method = request.method;
+  const allowed_methods = [...new Set(ROUTES.map((route) => route.method))];
 
-  switch (request.method) {
-    case "GET":
-      return handleRequestGet(request, env);
-    case "POST":
-      return handleRequestPost(request, env);
-    default:
-      return new Response("Method Not Allowed", {
-        status: 405,
-        headers: { Allow: ALLOWED_METHODS.join(", ") },
-      });
+  if (!allowed_methods.includes(method)) {
+    return new Response("Method Not Allowed", {
+      status: 405,
+      headers: { Allow: allowed_methods.join(", ") },
+    });
   }
+
+  for (const route of ROUTES) {
+    if (route.method !== method) continue;
+    const match = route.pattern.exec(url);
+    if (match) {
+      getConfig(env);
+      return route.handler(request, env, match);
+    }
+  }
+  return new Response("Not Found", { status: 404 });
 }
 
 function getConfig(env) {
@@ -65,21 +87,6 @@ function getConfig(env) {
   }
 }
 
-function isValidGetPath(requestUrl) {
-  const url = new URL(requestUrl);
-  const path = url.pathname;
-  const regex = new RegExp(`^/[A-Za-z0-9]{${MIN_LENGTH},${MAX_LENGTH}}$`);
-  return regex.test(path);
-}
-
-function isValidPostPath(requestUrl) {
-  const url = new URL(requestUrl);
-  const path = url.pathname;
-  const escapedPrefix = PREFIX.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const regex = new RegExp(`^${escapedPrefix}$`);
-  return regex.test(path);
-}
-
 function isValidPostHeaders(headers) {
   if (AUTHORIZATION === "") {
     return true;
@@ -103,12 +110,6 @@ function isValidPostHeaders(headers) {
     authregex.test(authHeader) &&
     validcontenttyperegex.test(contentTypeHeader.toLowerCase())
   );
-}
-
-function extractGetKeyFromUrl(requestUrl) {
-  const url = new URL(requestUrl);
-  const path = url.pathname;
-  return path.substring(1);
 }
 
 async function extractPostFormData(request) {
@@ -221,12 +222,8 @@ async function getData(env, key) {
   return { content };
 }
 
-async function handleRequestGet(request, env) {
-  if (!isValidGetPath(request.url)) {
-    return new Response("Invalid path", { status: 400 });
-  }
-
-  const key = extractGetKeyFromUrl(request.url);
+async function handleRequestIDGet(request, env, match) {
+  const key = match.pathname.groups.id;
 
   try {
     const { content } = await getData(env, key);
@@ -246,11 +243,7 @@ async function handleRequestGet(request, env) {
   }
 }
 
-async function handleRequestPost(request, env) {
-  if (!isValidPostPath(request.url)) {
-    return new Response("Invalid path", { status: 400 });
-  }
-
+async function handleRequestApiPost(request, env, match) {
   if (!isValidPostHeaders(request.headers)) {
     return new Response("Invalid header", { status: 401 });
   }
